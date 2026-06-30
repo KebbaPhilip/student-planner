@@ -1,1 +1,337 @@
 <!-- index.html -->
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="StudySync helps students organize study plans, tasks, and deadlines in one place."
+		/>
+		<title>StudySync</title>
+		<link rel="stylesheet" href="css/styles.css" />
+		<script src="js/api.js" defer></script>
+		<script src="js/app.js" defer></script>
+	</head>
+	<body>
+		<div class="page-shell">
+			<div class="page-glow page-glow-left" aria-hidden="true"></div>
+			<div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+			<div id="appContainer" class="app-container">
+				<section id="authPage" class="auth-page">
+					<div class="auth-hero">
+						<p class="eyebrow">Study smarter</p>
+						<h1>Plan less, focus more.</h1>
+						<p class="hero-copy">
+							Keep every assignment, deadline, and task in one calm workspace.
+						</p>
+
+						<div class="hero-points">
+							<article>
+								<span>01</span>
+								<h2>Track deadlines</h2>
+								<p>See what is urgent without digging through notes.</p>
+							</article>
+							<article>
+								<span>02</span>
+								<h2>Break work down</h2>
+								<p>Turn large study goals into simple checklists.</p>
+							</article>
+							<article>
+								<span>03</span>
+								<h2>Stay on pace</h2>
+								<p>Sort by priority and status to stay in control.</p>
+							</article>
+						</div>
+					</div>
+
+					<div class="auth-card">
+						<div class="brand-lockup">
+							<div class="brand-mark">SS</div>
+							<div>
+								<p class="brand-name">StudySync</p>
+								<p class="brand-tag">A cleaner way to manage your study load.</p>
+							</div>
+						</div>
+
+						<div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+							<button id="loginToggle" class="auth-tab active" type="button">
+								Sign in
+							</button>
+							<button id="registerToggle" class="auth-tab" type="button">
+								Create account
+							</button>
+						</div>
+
+						<form id="loginForm" class="auth-form active">
+							<label>
+								<span>Email</span>
+								<input
+									id="loginEmail"
+									type="email"
+									name="email"
+									placeholder="you@example.com"
+									autocomplete="email"
+									required
+								/>
+							</label>
+
+							<label>
+								<span>Password</span>
+								<input
+									id="loginPassword"
+									type="password"
+									name="password"
+									placeholder="Your password"
+									autocomplete="current-password"
+									required
+								/>
+							</label>
+
+							<button class="primary-btn" type="submit">Sign in</button>
+							<div id="loginMessage" class="form-message" aria-live="polite"></div>
+						</form>
+
+						<form id="registerForm" class="auth-form">
+							<label>
+								<span>Name</span>
+								<input
+									id="registerName"
+									type="text"
+									name="name"
+									placeholder="Your name"
+									autocomplete="name"
+									required
+								/>
+							</label>
+
+							<label>
+								<span>Email</span>
+								<input
+									id="registerEmail"
+									type="email"
+									name="email"
+									placeholder="you@example.com"
+									autocomplete="email"
+									required
+								/>
+							</label>
+
+							<label>
+								<span>Password</span>
+								<input
+									id="registerPassword"
+									type="password"
+									name="password"
+									placeholder="Create a password"
+									autocomplete="new-password"
+									required
+								/>
+							</label>
+
+							<button class="primary-btn" type="submit">Create account</button>
+							<div id="registerMessage" class="form-message" aria-live="polite"></div>
+						</form>
+					</div>
+				</section>
+
+				<section id="dashboardPage" class="dashboard-page">
+					<aside class="sidebar">
+						<div class="brand-lockup sidebar-brand">
+							<div class="brand-mark">SS</div>
+							<div>
+								<p class="brand-name">StudySync</p>
+								<p class="brand-tag">Workspace</p>
+							</div>
+						</div>
+
+						<div class="sidebar-panel">
+							<p class="sidebar-label">Welcome back</p>
+							<h2 id="userName">User</h2>
+							<p class="sidebar-copy">Keep your study plans tidy and visible.</p>
+						</div>
+
+						<nav class="sidebar-nav" aria-label="Main navigation">
+							<button id="plansBtn" class="sidebar-btn active" type="button">
+								All plans
+							</button>
+							<button id="createBtn" class="sidebar-btn" type="button">
+								New plan
+							</button>
+						</nav>
+
+						<button id="logoutBtn" class="ghost-btn sidebar-logout" type="button">
+							Log out
+						</button>
+					</aside>
+
+					<main class="dashboard-main">
+						<header class="dashboard-header">
+							<div>
+								<p class="eyebrow">Planner overview</p>
+								<h1>Study dashboard</h1>
+								<p class="dashboard-intro">
+									Organize deadlines, priorities, and tasks from one place.
+								</p>
+							</div>
+
+							<div class="dashboard-filter">
+								<label for="filterStatus">Filter by status</label>
+								<select id="filterStatus">
+									<option value="">All statuses</option>
+									<option value="pending">Pending</option>
+									<option value="in-progress">In progress</option>
+									<option value="completed">Completed</option>
+								</select>
+							</div>
+						</header>
+
+						<section id="plansView" class="dashboard-view active">
+							<div class="section-header">
+								<div>
+									<p class="section-kicker">Your work</p>
+									<h2>Study plans</h2>
+								</div>
+								<div id="plansMessage" class="form-message" aria-live="polite"></div>
+							</div>
+
+							<div id="studyPlansContainer" class="study-plans-grid">
+								<div class="empty-state">
+									No study plans yet. Create one to get started.
+								</div>
+							</div>
+						</section>
+
+						<section id="createView" class="dashboard-view">
+							<div class="section-header">
+								<div>
+									<p class="section-kicker">Plan builder</p>
+									<h2 id="createTitle">Create New Study Plan</h2>
+								</div>
+							</div>
+
+							<form id="planForm" class="plan-form">
+								<label>
+									<span>Title</span>
+									<input id="planTitle" type="text" placeholder="Organic chemistry review" required />
+								</label>
+
+								<label>
+									<span>Subject</span>
+									<input id="planSubject" type="text" placeholder="Chemistry" required />
+								</label>
+
+								<label>
+									<span>Due date</span>
+									<input id="planDueDate" type="date" required />
+								</label>
+
+								<label>
+									<span>Priority</span>
+									<select id="planPriority">
+										<option value="low">Low</option>
+										<option value="medium" selected>Medium</option>
+										<option value="high">High</option>
+									</select>
+								</label>
+
+								<label class="full-width">
+									<span>Description</span>
+									<textarea
+										id="planDescription"
+										rows="5"
+										placeholder="Add notes, milestones, or topics to cover"
+									></textarea>
+								</label>
+
+								<div class="form-actions">
+									<button id="cancelPlanBtn" class="ghost-btn" type="button">
+										Cancel
+									</button>
+									<button id="submitPlanBtn" class="primary-btn" type="submit">
+										Create Plan
+									</button>
+								</div>
+
+								<div id="planMessage" class="form-message" aria-live="polite"></div>
+							</form>
+						</section>
+
+						<section id="detailView" class="dashboard-view">
+							<div class="detail-topbar">
+								<button id="backBtn" class="ghost-btn" type="button">
+									Back to plans
+								</button>
+								<div class="detail-actions">
+									<button id="editPlanBtn" class="secondary-btn" type="button">
+										Edit plan
+									</button>
+									<button id="deletePlanBtn" class="danger-btn" type="button">
+										Delete plan
+									</button>
+								</div>
+							</div>
+
+							<div class="detail-grid">
+								<section class="detail-panel detail-summary">
+									<p class="section-kicker">Plan details</p>
+									<h2 id="detailTitle">Study plan title</h2>
+									<p id="detailDescription" class="detail-description"></p>
+
+									<div class="detail-meta-grid">
+										<div>
+											<span class="meta-label">Subject</span>
+											<strong id="detailSubject" class="meta-value"></strong>
+										</div>
+										<div>
+											<span class="meta-label">Due date</span>
+											<strong id="detailDueDate" class="meta-value"></strong>
+										</div>
+										<div>
+											<span class="meta-label">Priority</span>
+											<strong id="detailPriority" class="info-value priority-badge medium"></strong>
+										</div>
+									</div>
+
+									<label class="detail-status-field">
+										<span class="meta-label">Status</span>
+										<select id="detailStatus">
+											<option value="pending">Pending</option>
+											<option value="in-progress">In progress</option>
+											<option value="completed">Completed</option>
+										</select>
+									</label>
+
+									<div id="detailMessage" class="form-message" aria-live="polite"></div>
+								</section>
+
+								<section class="detail-panel detail-tasks">
+									<div class="section-header compact">
+										<div>
+											<p class="section-kicker">Task list</p>
+											<h3>Break the plan down</h3>
+										</div>
+									</div>
+
+									<div class="task-composer">
+										<input
+											id="taskInput"
+											type="text"
+											placeholder="Add a task such as read chapter 4"
+										/>
+										<button id="addTaskBtn" class="primary-btn" type="button">
+											Add task
+										</button>
+									</div>
+
+									<ul id="tasksList" class="tasks-list"></ul>
+								</section>
+							</div>
+						</section>
+					</main>
+				</section>
+			</div>
+		</div>
+	</body>
+</html>
