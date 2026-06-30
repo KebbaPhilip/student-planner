@@ -160,13 +160,13 @@ class StudySyncApp {
   async handleRegister(e) {
     e.preventDefault();
 
-    const name = document.getElementById("registerName").value;
+    const username = document.getElementById("registerName").value;
     const email = document.getElementById("registerEmail").value;
     const password = document.getElementById("registerPassword").value;
 
     try {
       this.showMessage(this.registerMessage, "Creating account...", "");
-      await api.register(name, email, password);
+      await api.register(username, email, password);
       this.showDashboard();
       this.clearAuthForms();
     } catch (error) {
@@ -191,7 +191,7 @@ class StudySyncApp {
 
   async showDashboard() {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    this.userName.textContent = user.name || "User";
+    this.userName.textContent = user.username || "User";
 
     this.authPage.style.display = "none";
     this.dashboardPage.style.display = "flex";
