@@ -38,12 +38,12 @@ class StudySyncAPI {
   // AUTHENTICATION ENDPOINTS
   // ========================================
 
-  async register(name, email, password) {
+  async register(username, email, password) {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: this.getHeaders(),
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       const data = await this.handleResponse(response);
