@@ -101,7 +101,7 @@ Navigate to the project:
 cd study-planner
 ```
 
-Follow the setup instructions in the `client` and `server` README files.
+Follow the setup instructions in the `public` and `server` README files.
 
 ---
 
