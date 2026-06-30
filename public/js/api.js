@@ -4,7 +4,11 @@
  * Handles all backend API calls
  */
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL =
+  window.location.hostname === "localhost" ||
+  window.location.hostname === "127.0.0.1"
+    ? "http://localhost:5000/api"
+    : "https://student-planner-z0f4.onrender.com/api";
 
 class StudySyncAPI {
   constructor() {
